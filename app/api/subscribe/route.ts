@@ -1,53 +1,56 @@
-// app/api/subscribe/route.ts
-
 import { NextResponse } from 'next/server';
-import SibApiV3Sdk from 'sib-api-v3-sdk';
+import Brevo from '@getbrevo/brevo';
 
-const apiKey = process.env.BREVO_API_KEY as string;
+const apiKey = process.env.BREVO_API_KEY!;
 const listId = parseInt(process.env.BREVO_LIST_ID || '', 10);
 
+interface BrevoError {
+  response?: {
+    body?: {
+      code?: string;
+      message?: string;
+    };
+  };
+}
+
+interface SubscribeRequestBody {
+  email: string;
+}
+
 export async function POST(request: Request) {
-  const body = await request.json();
+  let body: SubscribeRequestBody;
+
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+  }
+
   const { email } = body;
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
   }
 
-  const defaultClient = SibApiV3Sdk.ApiClient.instance;
-  const apiKeyInstance = defaultClient.authentications['api-key'];
-  apiKeyInstance.apiKey = apiKey;
-
-  const contactsApi = new SibApiV3Sdk.ContactsApi();
-
-  const createContact = new SibApiV3Sdk.CreateContact();
-  createContact.email = email;
-  if (listId) createContact.listIds = [listId];
+  const contactsApi = new Brevo.ContactsApi();
+  contactsApi.setApiKey(Brevo.ContactsApiApiKeys.apiKey, apiKey);
 
   try {
-    await contactsApi.createContact(createContact);
+    await contactsApi.createContact({ email, listIds: [listId] });
     return NextResponse.json({ message: 'Successfully subscribed' });
   } catch (error: unknown) {
-    if (
-      typeof error === 'object' &&
-      error !== null &&
-      'response' in error &&
-      typeof (error as { response: unknown }).response === 'object'
-    ) {
-      const response = (error as {
-        response: { body?: { code?: string; message?: string } };
-      }).response;
+    const brevoError = error as BrevoError;
 
-      if (response.body?.code === 'duplicate_parameter') {
-        return NextResponse.json({ message: 'Already subscribed' });
-      }
-
-      return NextResponse.json({
-        error: 'Failed to subscribe',
-        details: response.body,
-      }, { status: 500 });
+    if (brevoError.response?.body?.code === 'duplicate_parameter') {
+      return NextResponse.json({ message: 'Already subscribed' });
     }
 
-    return NextResponse.json({ error: 'Unexpected error occurred' }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'Failed to subscribe',
+        details: brevoError.response?.body ?? 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }
