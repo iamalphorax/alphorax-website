@@ -1,17 +1,17 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+// app/api/subscribe/route.ts
+
+import { NextResponse } from 'next/server';
 import SibApiV3Sdk from 'sib-api-v3-sdk';
 
 const apiKey = process.env.BREVO_API_KEY as string;
 const listId = parseInt(process.env.BREVO_LIST_ID || '', 10);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
+export async function POST(request: Request) {
+  const body = await request.json();
+  const { email } = body;
 
-  const { email } = req.body;
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.status(400).json({ error: 'Invalid email address' });
+    return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
   }
 
   const defaultClient = SibApiV3Sdk.ApiClient.instance;
@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     await contactsApi.createContact(createContact);
-    res.status(200).json({ message: 'Successfully subscribed' });
+    return NextResponse.json({ message: 'Successfully subscribed' });
   } catch (error: unknown) {
     if (
       typeof error === 'object' &&
@@ -37,17 +37,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const response = (error as {
         response: { body?: { code?: string; message?: string } };
       }).response;
-  
+
       if (response.body?.code === 'duplicate_parameter') {
-        return res.status(200).json({ message: 'Already subscribed' });
+        return NextResponse.json({ message: 'Already subscribed' });
       }
-  
-      return res.status(500).json({
+
+      return NextResponse.json({
         error: 'Failed to subscribe',
         details: response.body,
-      });
+      }, { status: 500 });
     }
-  
-    return res.status(500).json({ error: 'Unexpected error occurred' });
+
+    return NextResponse.json({ error: 'Unexpected error occurred' }, { status: 500 });
   }
 }
