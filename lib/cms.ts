@@ -28,7 +28,7 @@ export async function getContent(filename: string) {
         const { data } = matter(text);
 
         return data;
-    } catch (err: any) {
+    } catch (err) {
         console.error(`Cloudinary fetch error for ${filename}:`, err);
         return null; // Return null on error to handle gracefully in components
     }

@@ -7,12 +7,9 @@ import {
     SendIcon,
     CheckIcon,
     MessageSquareIcon,
-    ClockIcon,
     GlobeIcon,
     VideoIcon,
-    WifiIcon,
     HeadphonesIcon,
-    CalendarIcon,
     LinkedinIcon,
     TwitterIcon,
     InstagramIcon,
@@ -103,7 +100,7 @@ const ContactPage = () => {
                             Get In Touch
                         </div>
                         <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                            Let's Start a{' '}
+                            Let&apos;s Start a{' '}
                             <span className="text-accent relative inline-block">
                                 Conversation
                                 <svg

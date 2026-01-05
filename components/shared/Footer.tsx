@@ -2,14 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowUpIcon, SendIcon } from 'lucide-react';
+import { SendIcon } from 'lucide-react';
 const Footer = () => {
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    };
     return <footer className="relative pt-20 pb-5 mb:pb-10 overflow-hidden">
         <div className="absolute inset-0 bg-neural-pattern opacity-5" aria-hidden="true"></div>
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" aria-hidden="true"></div>

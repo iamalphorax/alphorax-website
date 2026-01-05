@@ -7,6 +7,7 @@ import CTA from '@/components/Homepage/CTA'
 import Testimonials from "@/components/Homepage/testimonials";
 
 import { getContent } from '@/lib/cms'
+import { ServicesConfig } from '@/types/services'
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://alphorax.com"),
@@ -48,15 +49,20 @@ const Home = async () => {
     getContent("home-cta.md")
   ]);
 
-  const servicesData = (servicesRawData as any)?.services;
+  const servicesData = (servicesRawData as ServicesConfig)?.services;
 
   return (
     <main>
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <Hero data={heroData as any} />
       <Services services={servicesData} />
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <About data={aboutData as any} />
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <FeaturedProjects data={projectsData as any} />
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <Testimonials data={testimonialsData as any} />
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       <CTA data={ctaData as any} />
     </main>
   )

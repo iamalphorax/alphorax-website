@@ -729,7 +729,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, bgP
                     <div className="p-3 bg-primary/30 rounded-lg inline-block mb-2 group-hover:bg-primary/50 transition-colors">
                         {cloneElement(icon, {
                             "aria-hidden": true,
-                        })}
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        } as any)}
                     </div>
                     <h3 className="text-xl font-semibold mb-0 group-hover:text-accent transition-colors">
                         {title}
@@ -809,7 +810,7 @@ const Services = () => {
                             </p>
                         </div>
                         {/* Service Details Sections */}
-                        {OurServices.map((service, index) => (
+                        {OurServices.map((service) => (
                             <section
                                 key={service.id}
                                 id={service.id}

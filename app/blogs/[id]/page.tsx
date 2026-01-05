@@ -13,7 +13,7 @@ import {
     MessageSquareIcon,
     ThumbsUpIcon,
 } from 'lucide-react';
-import { blogsData, Blog } from '@/lib/blogs-data';
+import { blogsData } from '@/lib/blogs-data';
 
 const BlogDetailPage = () => {
     const { id } = useParams();

@@ -3,9 +3,8 @@
 import React from 'react';
 import { CheckIcon, LightbulbIcon, TrendingUpIcon } from 'lucide-react';
 import Link from "next/link";
-import { ServicesConfig, Service } from '@/types/services'
+import { ServicesConfig } from '@/types/services'
 import { RenderIcon } from '@/components/shared/RenderIcon'
-import ServiceCard from '@/components/shared/serviceCard'
 import Image from 'next/image';
 
 const Services: React.FC<ServicesConfig> = ({ services }) => {

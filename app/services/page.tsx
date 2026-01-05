@@ -1,5 +1,4 @@
 import React from 'react';
-import { BarChartIcon, ShieldIcon, CloudIcon } from 'lucide-react';
 import Link from "next/link";
 import ServicesHero from '@/components/services/hero';
 import Services from '@/components/services/services';
@@ -8,6 +7,7 @@ import ServicesIndustries from '@/components/services/industries';
 
 
 import { getContent } from '@/lib/cms';
+import { ServicesConfig } from '@/types/services';
 
 const ServicesPage = async () => {
     const [servicesRawData, servicesHeroData, servicesFaqData, industriesData] = await Promise.all([
@@ -17,9 +17,12 @@ const ServicesPage = async () => {
         getContent("industries.md")
     ]);
 
-    const servicesData = (servicesRawData as any)?.services;
+    const servicesData = (servicesRawData as ServicesConfig)?.services;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const heroData = (servicesHeroData as any)?.hero;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const faqData = (servicesFaqData as any)?.faq;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const industriesListData = (industriesData as any)?.industries;
 
     return (

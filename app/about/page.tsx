@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from 'react';
 import {
-    CheckCircleIcon,
     UsersIcon,
     BriefcaseIcon,
     AwardIcon,
@@ -124,7 +123,7 @@ const AboutPage = () => {
                             of AI Technology
                         </h1>
                         <p className="text-xl md:text-2xl text-secondary-silver mb-8 max-w-2xl">
-                            We're on a mission to make advanced AI solutions accessible to
+                            We&apos;re on a mission to make advanced AI solutions accessible to
                             businesses of all sizes, driving innovation and growth
                         </p>
                     </div>
@@ -209,7 +208,7 @@ const AboutPage = () => {
                                     Alphorax was established to bridge this gap.
                                 </p>
                                 <p>
-                                    Over time, we've expanded our services from basic machine
+                                    Over time, we&apos;ve expanded our services from basic machine
                                     learning implementations to comprehensive AI solutions that
                                     address complex business challenges across industries. Moving forward,
                                     we aim to lead the next wave of AI innovation, empowering
@@ -352,7 +351,7 @@ const AboutPage = () => {
                                 Our Vision
                             </h3>
                             <p className="text-lg text-secondary-silver">
-                                Our vision is to be the global leader in technology innovation, revolutionizing industries by transforming ideas into action. We aim to create a future-ready world where technology works seamlessly to solve the world's most pressing challenges while delivering unparalleled value to businesses and communities worldwide.
+                                Our vision is to be the global leader in technology innovation, revolutionizing industries by transforming ideas into action. We aim to create a future-ready world where technology works seamlessly to solve the world&apos;s most pressing challenges while delivering unparalleled value to businesses and communities worldwide.
                             </p>
                         </div>
                     </div>

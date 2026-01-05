@@ -21,12 +21,13 @@ export async function GET() {
         const response = await fetch(file.secure_url);
         const text = await response.text();
         // Parse your markdown frontmatter
-        const { data, content } = matter(text);
+        const { data } = matter(text);
 
         // Return the response
         return NextResponse.json(data);
-    } catch (err: any) {
+    } catch (err) {
         console.error("Cloudinary fetch error:", err);
-        return NextResponse.json({ error: err.message }, { status: 500 });
+        const errorMessage = err instanceof Error ? err.message : "Unknown error";
+        return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
 }

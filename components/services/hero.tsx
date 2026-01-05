@@ -1,7 +1,8 @@
 'use client'
 
-import { Service, HeroData } from '@/types/services'
+import { Service } from '@/types/services'
 import { RenderIcon } from '@/components/shared/RenderIcon';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ServicesHero: React.FC<{ services: Service[], hero: any }> = ({ services, hero }) => {
 
     return (

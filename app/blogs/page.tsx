@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import Pagination from '@/components/shared/Pagination';
 
-import { blogsData, Blog } from '@/lib/blogs-data';
+import { blogsData } from '@/lib/blogs-data';
 
 // Define all available categories and subcategories
 const categories = [

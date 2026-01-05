@@ -9,13 +9,13 @@ import {
 } from 'lucide-react'
 import { RenderIcon } from '@/components/shared/RenderIcon'
 import ContactFormModal from '@/components/shared/ContactFormModal'
-import { Service } from '@/types/services'
+import { Service, ServiceProcess, ServiceItem } from '@/types/services'
 
 interface ServicePageContentProps {
     service: Service
 }
 
-const ProcessMarquee: React.FC<{ process: any[] }> = ({ process }) => {
+const ProcessMarquee: React.FC<{ process: ServiceProcess[] }> = ({ process }) => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -115,7 +115,7 @@ const ServicePageContent: React.FC<ServicePageContentProps> = ({ service }) => {
     }
 
     const StickyNav: React.FC<{
-        sections: any[]
+        sections: ServiceItem[]
         offset?: number
     }> = ({ sections, offset = 64 }) => {
         const [activeId, setActiveId] = useState<string>('')
@@ -355,7 +355,7 @@ const ServicePageContent: React.FC<ServicePageContentProps> = ({ service }) => {
                             Ready to Elevate Your <span className="text-accent">Business?</span>
                         </h2>
                         <p className="text-xl text-secondary-silver mb-8 max-w-2xl mx-auto">
-                            Let's discuss how our {service.title} expertise can help you achieve your goals.
+                            Let&apos;s discuss how our {service.title} expertise can help you achieve your goals.
                         </p>
                         <button onClick={() => handleOpenModal()} className="px-8 py-4 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-md border border-accent/20 hover:border-accent transition-all shadow-lg shadow-accent/10 inline-flex items-center group">
                             <span>Get Started Now</span>
