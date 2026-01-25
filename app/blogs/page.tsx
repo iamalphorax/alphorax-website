@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   SearchIcon,
@@ -175,11 +174,10 @@ const BlogsPage = () => {
                       className="absolute inset-0 bg-gradient-to-t from-secondary-charcoal to-transparent opacity-0 group-hover:opacity-70 transition-opacity z-10"
                       aria-hidden="true"
                     ></div>
-                    <Image
+                    <img
                       src={blog.image}
                       alt={blog.title}
-                      fill
-                      className="object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
                     />
                   </div>
                   <div className="p-6">
@@ -305,11 +303,10 @@ const BlogsPage = () => {
                       className="absolute inset-0 bg-gradient-to-t from-secondary-charcoal to-transparent opacity-0 group-hover:opacity-70 transition-opacity z-10"
                       aria-hidden="true"
                     ></div>
-                    <Image
+                    <img
                       src={blog.image}
                       alt={blog.title}
-                      fill
-                      className="object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
                     />
                   </div>
                   <div className="p-6">

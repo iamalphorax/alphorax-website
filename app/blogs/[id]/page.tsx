@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
@@ -67,11 +66,10 @@ const BlogDetailPage = () => {
       {/* Blog Hero */}
       <section className="relative h-[60vh] min-h-[400px] overflow-hidden">
         <div className="absolute inset-0">
-          <Image
+          <img
             src={blog.image}
             alt={blog.title}
-            fill
-            className="object-cover"
+            className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
         </div>
@@ -170,11 +168,10 @@ const BlogDetailPage = () => {
                         className="absolute inset-0 bg-gradient-to-t from-secondary-charcoal to-transparent opacity-0 group-hover:opacity-70 transition-opacity z-10"
                         aria-hidden="true"
                       ></div>
-                      <Image
+                      <img
                         src={post.image}
                         alt={post.title}
-                        fill
-                        className="object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
+                        className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
                       />
                     </div>
                     <div className="p-4">
