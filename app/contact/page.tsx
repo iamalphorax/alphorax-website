@@ -9,6 +9,7 @@ import {
   MessageSquareIcon,
   GlobeIcon,
   VideoIcon,
+  MessageCircleIcon,
   HeadphonesIcon,
   LinkedinIcon,
   TwitterIcon,
@@ -137,16 +138,16 @@ const ContactPage = () => {
               {
                 icon: <PhoneIcon size={24} className="text-accent" />,
                 title: "Call Us",
-                content: "+1 (123) 456-7890",
+                content: "+2348139015905",
                 description: "Monday to Friday, 9am - 6pm EST",
-                link: "tel:+11234567890",
+                link: "tel:+2348139015905",
               },
               {
-                icon: <VideoIcon size={24} className="text-accent" />,
-                title: "Virtual Meetings",
-                content: "Schedule a video call",
+                icon: <MessageCircleIcon size={24} className="text-accent" />,
+                title: "WhatsApp Us",
+                content: "+1 (639) 852-5168",
                 description: "Flexible hours across all time zones",
-                link: "#contact-form",
+                link: "https://wa.me/16398525168",
               },
             ].map((item, index) => (
               <a
@@ -356,50 +357,36 @@ const ContactPage = () => {
                   Follow us on social media to stay updated with our latest
                   projects, insights, and company news.
                 </p>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
                   {[
                     {
                       name: "LinkedIn",
                       icon: <LinkedinIcon size={24} className="text-white" />,
-                      username: "@alphorax",
+                      username: "@alphoraxltd",
                       color: "bg-[#0077B5]",
-                      url: "https://linkedin.com/company/alphorax",
+                      url: "https://linkedin.com/company/alphoraxltd",
                     },
                     {
                       name: "Twitter",
                       icon: <TwitterIcon size={24} className="text-white" />,
-                      username: "@alphorax_ai",
+                      username: "@alphoraxltd",
                       color: "bg-[#1DA1F2]",
-                      url: "https://twitter.com/alphorax_ai",
+                      url: "https://twitter.com/alphoraxltd",
                     },
                     {
                       name: "Instagram",
                       icon: <InstagramIcon size={24} className="text-white" />,
-                      username: "@alphorax.ai",
+                      username: "@alphoraxltd",
                       color:
                         "bg-gradient-to-tr from-[#fa7e1e] via-[#d62976] to-[#4f5bd5]",
-                      url: "https://instagram.com/alphorax.ai",
-                    },
-                    {
-                      name: "GitHub",
-                      icon: <GithubIcon size={24} className="text-white" />,
-                      username: "@alphorax-tech",
-                      color: "bg-[#333]",
-                      url: "https://github.com/alphorax-tech",
-                    },
-                    {
-                      name: "YouTube",
-                      icon: <YoutubeIcon size={24} className="text-white" />,
-                      username: "AlphoraxAI",
-                      color: "bg-[#FF0000]",
-                      url: "https://youtube.com/c/AlphoraxAI",
+                      url: "https://instagram.com/alphoraxltd",
                     },
                     {
                       name: "Facebook",
                       icon: <FacebookIcon size={24} className="text-white" />,
-                      username: "@alphorax.official",
+                      username: "@alphoraxltd",
                       color: "bg-[#1877F2]",
-                      url: "https://facebook.com/alphorax.official",
+                      url: "https://facebook.com/alphoraxltd",
                     },
                   ].map((platform, index) => (
                     <a
