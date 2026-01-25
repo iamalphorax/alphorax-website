@@ -68,7 +68,7 @@ const Header = () => {
               ></div>
               <div className="relative">
                 <img
-                  src="https://uploadthingy.s3.us-west-1.amazonaws.com/gqvCDJ3jYf47x4PCruFqCS/logo_512_512.png"
+                  src="/logo_512_512.png"
                   alt="Alphorax Logo"
                   className="h-12 w-auto"
                 />
