@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import Image from "next/image";
 import {
   CheckIcon,
   ArrowRightIcon,
@@ -322,12 +321,11 @@ const ServicePageContent: React.FC<ServicePageContentProps> = ({ service }) => {
               >
                 <div className="relative">
                   <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg"></div>
-                  <div className="relative overflow-hidden rounded-xl border border-accent/30">
+                  <div className="relative overflow-hidden rounded-xl border border-accent/30 max-h-[400px]">
                     {item.image && (
-                      <Image
+                      <img
                         src={item.image}
                         alt={item.title}
-                        fill
                         className="object-cover"
                       />
                     )}

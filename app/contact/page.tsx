@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import Image from "next/image";
 import {
   MailIcon,
   PhoneIcon,
@@ -451,11 +450,10 @@ const ContactPage = () => {
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2">
                       <div className="h-64 md:h-auto relative overflow-hidden min-h-[320px]">
-                        <Image
+                        <img
                           src={item.image}
                           alt={item.title}
-                          fill
-                          className="absolute inset-0 object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
+                          className="absolute inset-0 w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
                         />
                         <div className="absolute inset-0 bg-secondary-charcoal/40 group-hover:bg-secondary-charcoal/20 transition-colors duration-500"></div>
                         <div className="absolute top-4 left-4 bg-accent/90 text-white px-3 py-1 rounded-md text-sm font-medium z-10">
