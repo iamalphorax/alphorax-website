@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { ChevronRightIcon, SparklesIcon } from 'lucide-react'
 import { HeroData } from '@/types/services'
 
@@ -212,10 +213,12 @@ const Hero = ({ data }: { data: HeroData }) => {
                                     'https://cdn.worldvectorlogo.com/logos/python-5.svg',
                                     'https://cdn.worldvectorlogo.com/logos/aws-2.svg',
                                 ].map((src, i) => (
-                                    <img
+                                    <Image
                                         key={i}
                                         src={src}
                                         alt={`${i === 0 ? 'TensorFlow' : i === 1 ? 'Python' : 'AWS'} logo`}
+                                        width={32}
+                                        height={32}
                                         className="h-8 w-auto grayscale hover:grayscale-0 transition-all duration-300"
                                     />
                                 ))}

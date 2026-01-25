@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
 import {
     MenuIcon,
     XIcon,
@@ -70,9 +71,11 @@ const Header = () => {
                                 aria-hidden="true"
                             ></div>
                             <div className="relative">
-                                <img
+                                <Image
                                     src="https://uploadthingy.s3.us-west-1.amazonaws.com/gqvCDJ3jYf47x4PCruFqCS/logo_512_512.png"
                                     alt="Alphorax Logo"
+                                    width={48}
+                                    height={48}
                                     className="h-12 w-auto"
                                 />
                             </div>

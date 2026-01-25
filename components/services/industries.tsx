@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { BarChartIcon, ShieldIcon, CloudIcon } from 'lucide-react';
 import Link from "next/link";
 import { IndustriesSection } from "@/types/industries";
@@ -64,7 +65,7 @@ const ServicesIndustries: React.FC<{ industries: IndustriesSection }> = ({ indus
                         image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=800&auto=format&fit=crop'
                     }].map((industry, index) => <div key={index} className="group relative overflow-hidden rounded-xl">
                         <div className="absolute inset-0">
-                            <img src={industry.image} alt={industry.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                            <Image src={industry.image} alt={industry.title} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
                             <div className="absolute inset-0 bg-gradient-to-t from-secondary-charcoal via-secondary-charcoal/70 to-transparent"></div>
                         </div>
                         <div className="relative p-6 h-full flex flex-col justify-end min-h-[250px]">

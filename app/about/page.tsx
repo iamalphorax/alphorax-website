@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import {
     UsersIcon,
     BriefcaseIcon,
@@ -238,11 +239,12 @@ const AboutPage = () => {
                         <div className="relative">
                             <div className="absolute -inset-4 "></div>
                             <div className="relative rounded-xl overflow-hidden border border-accent/30">
-                                <div className="aspect-video">
-                                    <img
+                                <div className="aspect-video relative">
+                                    <Image
                                         src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop"
                                         alt="AI technology visualization"
-                                        className="w-full h-full object-cover"
+                                        fill
+                                        className="object-cover"
                                     />
                                 </div>
                                 <div className="absolute inset-0 bg-gradient-to-t from-secondary-charcoal/80 to-transparent"></div>
@@ -274,12 +276,13 @@ const AboutPage = () => {
                                         {aiTechStack.map((tech, i) => (
                                             <div
                                                 key={i}
-                                                className="tech-stack-item flex items-center justify-center flex-shrink-0 w-24 h-12 group"
+                                                className="tech-stack-item flex items-center justify-center flex-shrink-0 w-24 h-12 group relative"
                                             >
-                                                <img
+                                                <Image
                                                     src={tech.src}
                                                     alt={`${tech.name} logo`}
-                                                    className="h-8 md:h-10 w-auto opacity-60 group-hover:opacity-100 transition-opacity"
+                                                    fill
+                                                    className="h-8 md:h-10 w-auto opacity-60 group-hover:opacity-100 transition-opacity object-contain"
                                                 />
                                             </div>
                                         ))}
@@ -521,16 +524,16 @@ const AboutPage = () => {
                             <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg"></div>
                             <div className="relative rounded-xl overflow-hidden border border-accent/30 bg-secondary-charcoal/50">
                                 {/* World map with highlighted locations */}
-                                <div
-                                    className="relative w-full h-0"
+                                <div className="relative h-0"
                                     style={{
                                         paddingBottom: '56.25%',
                                     }}
                                 >
-                                    <img
+                                    <Image
                                         src="/images/global-map.png"
                                         alt="World Map"
-                                        className="absolute inset-0 w-full h-full object-cover opacity-50"
+                                        fill
+                                        className="absolute inset-0 object-cover opacity-50"
                                     />
                                     <div className="absolute inset-0">
                                         {/* Digital connection points */}

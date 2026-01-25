@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { SendIcon } from 'lucide-react';
 const Footer = () => {
@@ -24,7 +25,7 @@ const Footer = () => {
                         <div className="relative">
                             <div className="absolute -inset-1 bg-gradient-to-r from-accent to-primary rounded-full opacity-0 group-hover:opacity-70 blur transition duration-300" aria-hidden="true"></div>
                             <div className="relative">
-                                <img src="/logo_512_512.png" alt="Alphorax Logo" className="h-10 w-auto" />
+                                <Image src="/logo_512_512.png" alt="Alphorax Logo" width={40} height={40} className="h-10 w-auto" />
                             </div>
                         </div>
                         <div className="ml-3">
@@ -152,13 +153,13 @@ const Footer = () => {
                         <p className="text-sm text-secondary-silver">Our Product:</p>
                         <div className="mt-2 flex items-center space-x-4">
                             <div className="p-2 bg-secondary-charcoal/30 rounded-md">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Partner" className="h-6 w-auto opacity-70" />
+                                <Image src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM Partner" width={24} height={24} className="h-6 w-auto opacity-70" />
                             </div>
                             <div className="p-2 bg-secondary-charcoal/30 rounded-md">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="AWS Partner" className="h-6 w-auto opacity-70" />
+                                <Image src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="AWS Partner" width={24} height={24} className="h-6 w-auto opacity-70" />
                             </div>
                             <div className="p-2 bg-secondary-charcoal/30 rounded-md">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg" alt="Azure Partner" className="h-6 w-auto opacity-70" />
+                                <Image src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg" alt="Azure Partner" width={24} height={24} className="h-6 w-auto opacity-70" />
                             </div>
                         </div>
                     </div>

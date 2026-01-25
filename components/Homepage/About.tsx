@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { CheckCircleIcon, ZapIcon } from 'lucide-react'
 import { AboutData } from '@/types/services'
 import { useRef, useEffect } from 'react';
@@ -385,13 +386,14 @@ const About = ({ data }: { data: AboutData }) => {
                                     {aboutContent?.techStack?.map((tech, i) => (
                                         <div
                                             key={i}
-                                            className="tech-stack-item p-3 bg-secondary-charcoal/30 rounded-lg flex items-center justify-center hover:bg-secondary-charcoal/50 transition-colors flex-shrink-0 w-16 h-16"
+                                            className="tech-stack-item p-3 bg-secondary-charcoal/30 rounded-lg flex items-center justify-center hover:bg-secondary-charcoal/50 transition-colors flex-shrink-0 w-16 h-16 relative"
                                             tabIndex={0}
                                         >
-                                            <img
+                                            <Image
                                                 src={tech.src}
                                                 alt={`${tech.name} logo`}
-                                                className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity"
+                                                fill
+                                                className="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity object-contain"
                                             />
                                         </div>
                                     ))}

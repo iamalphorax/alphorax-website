@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState, useRef } from 'react'
+import Image from 'next/image'
 import {
     CheckIcon,
     ArrowRightIcon,
@@ -153,7 +154,7 @@ const ServicePageContent: React.FC<ServicePageContentProps> = ({ service }) => {
             <nav className="sticky z-40 backdrop-blur-xl transition-all duration-300" style={{ top: offset }}>
                 <div className="container flex items-center justify-center mx-auto py-4">
                     <ul className="flex flex-wrap justify-center px-3 py-1 m-0 gap-3 w-fit border-2 border-accent bg-accent/10 transition-all duration-300 rounded-full">
-                        {sections.map(({ id, navIcon, title }) => (
+                        {sections.map(({ id, navIcon }) => (
                             <li key={id} className="relative">
                                 <button
                                     onClick={() => handleScroll(id)}
@@ -275,7 +276,7 @@ const ServicePageContent: React.FC<ServicePageContentProps> = ({ service }) => {
                                 <div className="relative">
                                     <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl blur-lg"></div>
                                     <div className="relative overflow-hidden rounded-xl border border-accent/30">
-                                        {item.image && <img src={item.image} alt={item.title} className="w-full h-[400px] object-cover" />}
+                                        {item.image && <Image src={item.image} alt={item.title} fill className="object-cover" />}
                                         <div className="absolute inset-0 bg-gradient-to-t from-secondary-charcoal/80 to-transparent"></div>
                                         <div className="absolute bottom-0 left-0 w-full p-6">
                                             <div className="flex items-center">
