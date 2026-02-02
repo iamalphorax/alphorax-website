@@ -4,6 +4,7 @@ import "./globals.css";
 import Script from "next/script";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer"
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -59,6 +60,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );
