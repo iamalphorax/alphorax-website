@@ -48,6 +48,23 @@ export default function RootLayout({
   };
   return (
     <html lang="en" className={`${inter.variable}`}>
+      <head>
+        {/* Google Analytics */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-FNS3P4DVCZ"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-FNS3P4DVCZ');
+            `,
+          }}
+        />
+      </head>
       <body className={`min-h-screen bg-gradient-to-b from-secondary-charcoal to-[#001933] text-white`}>
         {/* ✅ Inject global structured data */}
         <Script
