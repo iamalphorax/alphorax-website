@@ -1,0 +1,34 @@
+# Alphorax
+
+Alphorax delivers forward-thinking digital infrastructure, AI integrations, and cloud systems built for scale.
+
+## Main Links
+- [Home](https://alphorax.com)
+- [About](https://alphorax.com/about)
+- [Services](https://alphorax.com/services)
+- [Blog](https://alphorax.com/blogs)
+- [Contact](https://alphorax.com/contact)
+
+## Services
+
+### AI Solutions
+- AI Model Development
+- AI Integration
+- AI Training & Fine-tuning
+
+### Project Development
+- Web Development
+- Mobile App Development
+- Custom Software Development
+
+### IT Consulting
+- IT Strategy & Roadmapping
+- Infrastructure Optimization
+- IT Support & Issue Resolution
+
+## About Alphorax
+Founded in 2025, Alphorax is pioneering the future of AI technology. We make advanced AI solutions accessible to businesses of all sizes, driving innovation and growth through cutting-edge technology and expert-led strategy.
+
+## Contact
+- Email: info@alphorax.com
+- Phone: +1 (123) 456-7890
