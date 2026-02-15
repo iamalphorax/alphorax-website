@@ -11,13 +11,13 @@ import { ServicesConfig } from '@/types/services'
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://alphorax.com"),
-  title: "Smart AI, reliable software, trusted IT consulting | Alphorax",
+  title: "Alphorax – Custom Software, IT Consulting & AI-Powered Solutions",
   description:
-    "Alphorax delivers forward-thinking digital infrastructure, AI integrations, and cloud systems built for scale.",
-  keywords: ["Tech Solutions", "AI Systems", "Cloud", "Alphorax"],
+    "Delivering professional web and scalable mobile development, expert IT consulting, and advanced AI solutions that enable secure infrastructure, automation, modernize systems, and scale digital operations worldwide.",
+  keywords: ["Tech Solutions", "AI Systems", "Cloud", "Alphorax", "Custom Software", "IT Consulting", "Website Development", "Mobile App Development"],
   openGraph: {
-    title: "Smart AI, reliable software, trusted IT consulting | Alphorax",
-    description: "Alphorax delivers forward-thinking digital infrastructure, AI integrations, and cloud systems built for scale.",
+    title: "Alphorax – Custom Software, IT Consulting & AI-Powered Solutions",
+    description: "Delivering professional web and scalable mobile development, expert IT consulting, and advanced AI solutions that enable secure infrastructure, automation, modernize systems, and scale digital operations worldwide.",
     url: "/",
     siteName: "Alphorax",
     images: [
@@ -32,9 +32,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alphorax",
+    title: "Alphorax – Custom Software, IT Consulting & AI-Powered Solutions",
     description:
-      "Modern tech infrastructure and AI solutions for tomorrow’s businesses.",
+      "Delivering professional web and scalable mobile development, expert IT consulting, and advanced AI solutions that enable secure infrastructure, automation, modernize systems, and scale digital operations worldwide.",
     images: ["/twitter-card.png"],
   },
 };

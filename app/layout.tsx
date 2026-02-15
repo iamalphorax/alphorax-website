@@ -17,10 +17,10 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://alphorax.com";
 
 export const metadata: Metadata = {
   title: {
-    default: "Alphorax",
+    default: "Alphorax – Custom Software, IT Consulting & AI-Powered Solutions",
     template: "%s | Alphorax",
   },
-  description: "Smart AI, reliable software, trusted IT consulting.",
+  description: "Delivering professional web and scalable mobile development, expert IT consulting, and advanced AI solutions that enable secure infrastructure, automation, modernize systems, and scale digital operations worldwide.",
   metadataBase: new URL(baseUrl),
 };
 
@@ -36,6 +36,7 @@ export default function RootLayout({
     name: "Alphorax",
     url: baseUrl,
     logo: `${baseUrl}/logo.png`,
+    description: "Delivering professional web and scalable mobile development, expert IT consulting, and advanced AI solutions that enable secure infrastructure, automation, modernize systems, and scale digital operations worldwide.",
     sameAs: [
       "https://linkedin.com/company/alphorax",
       "https://github.com/alphorax",

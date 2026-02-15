@@ -17,7 +17,11 @@ import {
   GithubIcon,
   YoutubeIcon,
 } from "lucide-react";
-import { generateOrganizationSchema, generateWebPageSchema, getJsonLdProps } from "@/lib/schema";
+import {
+  generateOrganizationSchema,
+  generateContactPageSchema,
+  getJsonLdProps,
+} from "@/lib/schema";
 
 interface FormState {
   name: string;
@@ -91,11 +95,7 @@ const ContactPage = () => {
 
   // Generate schema markup
   const organizationSchema = generateOrganizationSchema();
-  const pageSchema = generateWebPageSchema(
-    "Contact Alphorax - Get in Touch",
-    "Ready to explore how AI can transform your business? Contact Alphorax today. Our team is here to help you get started with AI solutions, project development, and IT consulting.",
-    "/contact"
-  );
+  const pageSchema = generateContactPageSchema();
 
   return (
     <>

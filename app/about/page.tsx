@@ -15,7 +15,7 @@ import {
 import Link from "next/link";
 import {
   generateOrganizationSchema,
-  generateWebPageSchema,
+  generateAboutPageSchema,
   getJsonLdProps,
 } from "@/lib/schema";
 
@@ -101,11 +101,7 @@ const AboutPage = () => {
 
   // Generate schema markup
   const organizationSchema = generateOrganizationSchema();
-  const pageSchema = generateWebPageSchema(
-    "About Alphorax - Pioneering the Future of AI Technology",
-    "Learn about Alphorax's mission to make advanced AI solutions accessible to businesses of all sizes. Founded in 2025, we're driving innovation through cutting-edge technology.",
-    "/about"
-  );
+  const pageSchema = generateAboutPageSchema();
 
   return (
     <>

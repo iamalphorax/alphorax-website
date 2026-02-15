@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
-import { blogsData } from "@/lib/blogs-data";
+import { getAllBlogs } from "@/lib/blogs";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = "https://alphorax.com";
+    const rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://alphorax.com";
+    const baseUrl = rawBaseUrl.endsWith("/") ? rawBaseUrl.slice(0, -1) : rawBaseUrl;
 
     // Static routes
     const staticRoutes: MetadataRoute.Sitemap = [
@@ -38,8 +39,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
     ];
 
-    // Blog posts from blogsData
-    const blogRoutes: MetadataRoute.Sitemap = blogsData.map((post) => ({
+    // Fetch dynamic blogs from Cloudinary
+    const blogs = await getAllBlogs();
+
+    const blogRoutes: MetadataRoute.Sitemap = blogs.map((post) => ({
         url: `${baseUrl}/blogs/${post.id}`,
         lastModified: new Date(post.date),
         changeFrequency: "monthly",

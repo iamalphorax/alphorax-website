@@ -16,6 +16,7 @@ export interface OrganizationSchema {
         email: string;
         contactType: string;
     };
+    knowsAbout?: string[];
 }
 
 export interface WebSiteSchema {
@@ -86,7 +87,7 @@ export function generateOrganizationSchema(): OrganizationSchema {
         url: baseUrl,
         logo: `${baseUrl}/logo.png`,
         description:
-            "Alphorax delivers forward-thinking digital infrastructure, AI integrations, and cloud systems built for scale.",
+            "Delivering professional web and scalable mobile development, expert IT consulting, and advanced AI solutions that enable secure infrastructure, automation, modernize systems, and scale digital operations worldwide.",
         sameAs: [
             "https://linkedin.com/company/alphoraxltd",
             "https://twitter.com/alphoraxltd",
@@ -97,6 +98,16 @@ export function generateOrganizationSchema(): OrganizationSchema {
             email: "info@alphorax.com",
             contactType: "Customer Service",
         },
+        "knowsAbout": [
+            "Artificial Intelligence",
+            "Machine Learning",
+            "Custom Software Development",
+            "IT Strategy",
+            "Cloud Computing",
+            "Digital Transformation",
+            "Web Development",
+            "Mobile App Development"
+        ]
     };
 }
 
@@ -110,7 +121,7 @@ export function generateWebSiteSchema(): WebSiteSchema {
         name: "Alphorax",
         url: baseUrl,
         description:
-            "Smart AI, reliable software, trusted IT consulting. Alphorax delivers forward-thinking digital infrastructure.",
+            "Delivering professional web and scalable mobile development, expert IT consulting, and advanced AI solutions that enable secure infrastructure, automation, modernize systems, and scale digital operations worldwide.",
         publisher: {
             "@type": "Organization",
             name: "Alphorax",
@@ -157,6 +168,17 @@ export function generateServiceSchema(
     };
 }
 
+export interface BreadcrumbListSchema {
+    "@context": string;
+    "@type": string;
+    itemListElement: {
+        "@type": string;
+        position: number;
+        name: string;
+        item: string;
+    }[];
+}
+
 /**
  * Generate BlogPosting schema
  */
@@ -192,8 +214,51 @@ export function generateBlogPostingSchema(
 }
 
 /**
+ * Generate BreadcrumbList schema
+ */
+export function generateBreadcrumbSchema(
+    items: { name: string; url: string }[]
+): BreadcrumbListSchema {
+    return {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: items.map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: item.name,
+            item: item.url.startsWith("http") ? item.url : `${baseUrl}${item.url}`,
+        })),
+    };
+}
+
+/**
+ * Generate WebPage schema for About page
+ */
+export function generateAboutPageSchema(): WebPageSchema {
+    return {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        name: "About Alphorax",
+        description: "Learn about Alphorax's mission to make advanced AI solutions accessible to businesses of all sizes.",
+        url: `${baseUrl}/about`,
+    };
+}
+
+/**
+ * Generate WebPage schema for Contact page
+ */
+export function generateContactPageSchema(): WebPageSchema {
+    return {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        name: "Contact Alphorax",
+        description: "Get in touch with Alphorax for custom AI solutions, software development, and IT consulting.",
+        url: `${baseUrl}/contact`,
+    };
+}
+
+/**
  * Generate JSON-LD script props for use in components
- * Usage: <script {...getJsonLdProps(schema)} />
  */
 export function getJsonLdProps(schema: object) {
     return {
