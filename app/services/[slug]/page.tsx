@@ -4,10 +4,62 @@ import ServicePageContent from "@/components/services/ServicePageContent";
 import { redirect } from "next/navigation";
 import { Service, ServicesConfig } from "@/types/services";
 
+import type { Metadata } from "next";
+
 interface ServicePageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+const serviceMetadata: Record<string, { title: string; description: string }> = {
+  "website-development": {
+    title: "Website Development",
+    description: "Responsive, high-performance websites and web applications with modern frameworks.",
+  },
+  "mobile-app-development": {
+    title: "Mobile App Development",
+    description: "Native and cross-platform mobile applications for iOS and Android devices.",
+  },
+  "software-development": {
+    title: "Software Development",
+    description: "Tailored desktop applications and enterprise solutions built with cutting-edge technology.",
+  },
+  "it-consulting": {
+    title: "IT Consulting",
+    description: "Expert guidance to align technology with your business strategy, optimize infrastructure, and ensure reliable IT operations.",
+  },
+  "ai-solutions": {
+    title: "Ai Solutions",
+    description: "Delivering cutting-edge AI technology solutions tailored to your business needs with custom models, seamless integration, and specialized training.",
+  },
+  "project-development": {
+    title: "Project Development",
+    description: "Delivering professional web and scalable mobile development tailored to your business needs."
+  }
+};
+
+export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const metadata = serviceMetadata[slug];
+
+  if (!metadata) {
+    // Fallback if slug not in mapping
+    const servicesData = await getContent("services.md");
+    const service = (servicesData as ServicesConfig)?.services?.find(
+      (s: Service) => s.link.split("/").pop() === slug || s.id === slug
+    );
+
+    return {
+      title: service ? `${service.title} | Alphorax` : "Service | Alphorax",
+      description: service?.description || "Professional services by Alphorax.",
+    };
+  }
+
+  return {
+    title: `${metadata.title} | Alphorax`,
+    description: metadata.description,
+  };
 }
 
 export async function generateStaticParams() {

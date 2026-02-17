@@ -10,6 +10,7 @@ export interface Blog {
     readTime: string;
     featured: boolean;
     content?: string;
+    keywords?: string[];
 }
 
 export const blogsData: Blog[] = [

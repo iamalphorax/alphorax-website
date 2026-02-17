@@ -4,6 +4,7 @@ import "./globals.css";
 import Script from "next/script";
 import Header from "@/components/shared/Header";
 import Footer from "@/components/shared/Footer"
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,10 +17,10 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://alphorax.com";
 
 export const metadata: Metadata = {
   title: {
-    default: "Alphorax",
+    default: "Alphorax – Custom Software, IT Consulting & AI-Powered Solutions",
     template: "%s | Alphorax",
   },
-  description: "Smart AI, reliable software, trusted IT consulting.",
+  description: "Delivering professional web and scalable mobile development, expert IT consulting, and advanced AI solutions that enable secure infrastructure, automation, modernize systems, and scale digital operations worldwide.",
   metadataBase: new URL(baseUrl),
 };
 
@@ -35,6 +36,7 @@ export default function RootLayout({
     name: "Alphorax",
     url: baseUrl,
     logo: `${baseUrl}/logo.png`,
+    description: "Delivering professional web and scalable mobile development, expert IT consulting, and advanced AI solutions that enable secure infrastructure, automation, modernize systems, and scale digital operations worldwide.",
     sameAs: [
       "https://linkedin.com/company/alphorax",
       "https://github.com/alphorax",
@@ -47,6 +49,23 @@ export default function RootLayout({
   };
   return (
     <html lang="en" className={`${inter.variable}`}>
+      <head>
+        {/* Google Analytics */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-FNS3P4DVCZ"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-FNS3P4DVCZ');
+            `,
+          }}
+        />
+      </head>
       <body className={`min-h-screen bg-gradient-to-b from-secondary-charcoal to-[#001933] text-white`}>
         {/* ✅ Inject global structured data */}
         <Script
@@ -59,6 +78,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );
