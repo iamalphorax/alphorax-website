@@ -140,6 +140,7 @@ const ContactPage = () => {
                 here to help you get started.
               </p>
             </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
               {[
                 {
@@ -152,16 +153,16 @@ const ContactPage = () => {
                 {
                   icon: <PhoneIcon size={24} className="text-accent" />,
                   title: "Call Us",
-                  content: "+1 (123) 456-7890",
+                  content: "+2348139015905",
                   description: "Monday to Friday, 9am - 6pm EST",
-                  link: "tel:+11234567890",
+                  link: "tel:+2348139015905",
                 },
                 {
-                  icon: <VideoIcon size={24} className="text-accent" />,
-                  title: "Virtual Meetings",
-                  content: "Schedule a video call",
+                  icon: <MessageCircleIcon size={24} className="text-accent" />,
+                  title: "WhatsApp Us",
+                  content: "+1 (639) 852-5168",
                   description: "Flexible hours across all time zones",
-                  link: "#contact-form",
+                  link: "https://wa.me/16398525168",
                 },
               ].map((item, index) => (
                 <a
@@ -169,63 +170,21 @@ const ContactPage = () => {
                   href={item.link}
                   className="bg-secondary-charcoal/30 backdrop-blur-sm rounded-xl p-6 text-center border border-secondary-silver/10 hover:border-accent/30 hover:bg-secondary-charcoal/50 transition-all group"
                 >
-                  <path
-                    d="M0,3 C45,1 135,6 180,3"
-                    stroke="rgba(77, 159, 255, 0.5)"
-                    strokeWidth="2"
-                    fill="none"
-                  />
-                </svg>
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl text-secondary-silver mb-8 max-w-2xl">
-              Ready to explore how AI can transform your business? Our team is
-              here to help you get started.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-            {[
-              {
-                icon: <MailIcon size={24} className="text-accent" />,
-                title: "Email Us",
-                content: "info@alphorax.com",
-                description: "For general inquiries and information",
-                link: "mailto:info@alphorax.com",
-              },
-              {
-                icon: <PhoneIcon size={24} className="text-accent" />,
-                title: "Call Us",
-                content: "+2348139015905",
-                description: "Monday to Friday, 9am - 6pm EST",
-                link: "tel:+2348139015905",
-              },
-              {
-                icon: <MessageCircleIcon size={24} className="text-accent" />,
-                title: "WhatsApp Us",
-                content: "+1 (639) 852-5168",
-                description: "Flexible hours across all time zones",
-                link: "https://wa.me/16398525168",
-              },
-            ].map((item, index) => (
-              <a
-                key={index}
-                href={item.link}
-                className="bg-secondary-charcoal/30 backdrop-blur-sm rounded-xl p-6 text-center border border-secondary-silver/10 hover:border-accent/30 hover:bg-secondary-charcoal/50 transition-all group"
-              >
-                <div className="p-3 bg-primary/20 rounded-lg inline-block mb-4 group-hover:bg-primary/40 transition-colors">
-                  {item.icon}
-                </div>
-                <h3 className="text-xl font-medium mb-2 group-hover:text-accent transition-colors">
-                  {item.title}
-                </h3>
-                <div className="text-white font-medium mb-2">
-                  {item.content}
-                </div>
-                <p className="text-secondary-silver text-sm">
-                  {item.description}
-                </p>
-              </a>
-            ))}
+                  <div className="p-3 bg-primary/20 rounded-lg inline-block mb-4 group-hover:bg-primary/40 transition-colors">
+                    {item.icon}
+                  </div>
+                  <h3 className="text-xl font-medium mb-2 group-hover:text-accent transition-colors">
+                    {item.title}
+                  </h3>
+                  <div className="text-white font-medium mb-2">
+                    {item.content}
+                  </div>
+                  <p className="text-secondary-silver text-sm">
+                    {item.description}
+                  </p>
+                </a>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -431,7 +390,9 @@ const ContactPage = () => {
                       },
                       {
                         name: "Instagram",
-                        icon: <InstagramIcon size={24} className="text-white" />,
+                        icon: (
+                          <InstagramIcon size={24} className="text-white" />
+                        ),
                         username: "@alphorax.ai",
                         color:
                           "bg-gradient-to-tr from-[#fa7e1e] via-[#d62976] to-[#4f5bd5]",
@@ -483,109 +444,6 @@ const ContactPage = () => {
                     ))}
                   </div>
                 </div>
-
-            {/* Digital Presence Information - Replacing physical offices */}
-            <div>
-              <h2 className="text-3xl font-bold mb-8 flex items-center">
-                <GlobeIcon size={24} className="text-accent mr-3" />
-                Our Digital Presence
-              </h2>
-              {/* Social Media Section */}
-              <div className="bg-secondary-charcoal/30 backdrop-blur-sm rounded-xl p-6 border border-secondary-silver/10 hover:border-accent/30 transition-all mb-8">
-                <h3 className="text-xl font-semibold mb-4 flex items-center">
-                  <svg
-                    className="w-5 h-5 mr-2 text-accent"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                    />
-                  </svg>
-                  Connect With Us
-                </h3>
-                <p className="text-secondary-silver mb-6">
-                  Follow us on social media to stay updated with our latest
-                  projects, insights, and company news.
-                </p>
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-                  {[
-                    {
-                      name: "LinkedIn",
-                      icon: <LinkedinIcon size={24} className="text-white" />,
-                      username: "@alphoraxltd",
-                      color: "bg-[#0077B5]",
-                      url: "https://linkedin.com/company/alphoraxltd",
-                    },
-                    {
-                      name: "Twitter",
-                      icon: <TwitterIcon size={24} className="text-white" />,
-                      username: "@alphoraxltd",
-                      color: "bg-[#1DA1F2]",
-                      url: "https://twitter.com/alphoraxltd",
-                    },
-                    {
-                      name: "Instagram",
-                      icon: <InstagramIcon size={24} className="text-white" />,
-                      username: "@alphoraxltd",
-                      color:
-                        "bg-gradient-to-tr from-[#fa7e1e] via-[#d62976] to-[#4f5bd5]",
-                      url: "https://instagram.com/alphoraxltd",
-                    },
-                    {
-                      name: "Facebook",
-                      icon: <FacebookIcon size={24} className="text-white" />,
-                      username: "@alphoraxltd",
-                      color: "bg-[#1877F2]",
-                      url: "https://facebook.com/alphoraxltd",
-                    },
-                  ].map((platform, index) => (
-                    <a
-                      key={index}
-                      className="bg-secondary-charcoal/30 backdrop-blur-sm rounded-xl overflow-hidden border border-secondary-silver/10 hover:border-accent/30 transition-all group"
-                    >
-                      <div className="grid grid-cols-1 md:grid-cols-2">
-                        <div className="h-64 md:h-auto relative overflow-hidden min-h-[320px]">
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            className="absolute inset-0 w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
-                          />
-                          <div className="absolute inset-0 bg-secondary-charcoal/40 group-hover:bg-secondary-charcoal/20 transition-colors duration-500"></div>
-                          <div className="absolute top-4 left-4 bg-accent/90 text-white px-3 py-1 rounded-md text-sm font-medium z-10">
-                            {item.title}
-                          </div>
-                        </div>
-                        <div className="p-6">
-                          <h3 className="text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
-                            {item.title}
-                          </h3>
-                          <p className="text-secondary-silver mb-4">
-                            {item.description}
-                          </p>
-                          <div className="space-y-2">
-                            {item.features.map((feature, idx) => (
-                              <div key={idx} className="flex items-start">
-                                <CheckIcon
-                                  size={16}
-                                  className="text-accent mt-1 mr-2 flex-shrink-0"
-                                />
-                                <p className="text-secondary-silver text-sm">
-                                  {feature}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </div>
@@ -604,7 +462,8 @@ const ContactPage = () => {
                   FAQ
                 </div>
                 <h2 className="text-3xl font-bold mb-4">
-                  Frequently Asked <span className="text-accent">Questions</span>
+                  Frequently Asked{" "}
+                  <span className="text-accent">Questions</span>
                 </h2>
                 <p className="text-lg text-secondary-silver">
                   Find answers to common questions about working with us
