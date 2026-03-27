@@ -42,12 +42,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch dynamic blogs from Cloudinary
     const blogs = await getAllBlogs();
 
-    const blogRoutes: MetadataRoute.Sitemap = blogs.map((post) => ({
-        url: `${baseUrl}/blogs/${post.id}`,
-        lastModified: new Date(post.date),
-        changeFrequency: "monthly",
-        priority: post.featured ? 0.8 : 0.6,
-    }));
+    const blogRoutes: MetadataRoute.Sitemap = blogs.reduce((acc, post) => {
+        const date = new Date(post.date);
+        if (!isNaN(date.getTime())) {
+            acc.push({
+                url: `${baseUrl}/blogs/${post.id}`,
+                lastModified: date,
+                changeFrequency: "monthly",
+                priority: post.featured ? 0.8 : 0.6,
+            });
+        }
+        return acc;
+    }, [] as MetadataRoute.Sitemap);
 
     return [...staticRoutes, ...blogRoutes];
 }

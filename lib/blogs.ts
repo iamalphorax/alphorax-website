@@ -58,7 +58,11 @@ export async function getAllBlogs(): Promise<Blog[]> {
             })
         );
 
-        return blogs.sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
+        return blogs.sort((a, b) => {
+            const timeA = new Date(a.date).getTime();
+            const timeB = new Date(b.date).getTime();
+            return (isNaN(timeB) ? 0 : timeB) - (isNaN(timeA) ? 0 : timeA);
+        });
     } catch (err) {
         console.error("Error fetching blogs from Cloudinary:", err);
         return [];
