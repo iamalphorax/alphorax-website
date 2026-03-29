@@ -2,6 +2,7 @@ import React from "react";
 import { getAllBlogs, getBlogCategories } from "@/lib/blogs";
 import { generateOrganizationSchema, generateWebPageSchema, getJsonLdProps, generateBreadcrumbSchema } from "@/lib/schema";
 import BlogList from "@/components/blogs/BlogList";
+import NewsletterForm from "@/components/blogs/NewsletterForm";
 
 const BlogsPage = async () => {
   const [blogsData, categories] = await Promise.all([
@@ -83,20 +84,7 @@ const BlogsPage = async () => {
                   Subscribe to receive the latest insights, trends, and news in
                   technology, AI, and software development.
                 </p>
-                <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="flex-grow px-4 py-3 bg-secondary-charcoal/50 border border-secondary-silver/20 rounded-md focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-transparent text-white"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-md border border-accent/20 hover:border-accent transition-all shadow-lg shadow-accent/10 whitespace-nowrap"
-                  >
-                    Subscribe
-                  </button>
-                </form>
+                <NewsletterForm />
                 <p className="text-xs text-secondary-silver/70 mt-4">
                   We respect your privacy. Unsubscribe at any time.
                 </p>

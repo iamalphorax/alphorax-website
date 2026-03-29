@@ -25,7 +25,9 @@ export async function POST(request: Request) {
     `;
 
     const brevoApiKey = process.env.BREVO_API_KEY;
-    const recipientEmail = process.env.CONTACT_EMAIL || "info@alphorax.com";
+    const contactEmail = process.env.CONTACT_EMAIL || "iamdavidabayomi@gmail.com";
+    const senderEmail = process.env.SENDER_EMAIL || contactEmail;
+    const listId = parseInt(process.env.BREVO_LIST_ID || "3");
 
     if (!brevoApiKey) {
       console.error("Missing BREVO_API_KEY environment variable.");
@@ -35,6 +37,75 @@ export async function POST(request: Request) {
       );
     }
 
+    // 1. Create/Update Contact in Brevo
+    try {
+      // Basic sanitization for Brevo's SMS attribute (needs E.164)
+      let sanitizedPhone = phone ? phone.replace(/[^0-9+]/g, "") : "";
+      
+      // If it looks like a potential phone number without a '+', try to add one 
+      // if it has 10+ digits, but this is a rough guess.
+      // Better to satisfy the SMS format if possible, otherwise we skip it to ensure contact creation.
+      if (sanitizedPhone && !sanitizedPhone.startsWith("+") && sanitizedPhone.length >= 10) {
+        // Many systems reject without +, but Brevo requires it for SMS
+        // We'll try to prepend it if it's missing.
+        sanitizedPhone = "+" + sanitizedPhone;
+      }
+
+      const attributes: Record<string, string> = {
+        FIRSTNAME: name.split(" ")[0] || "",
+        LASTNAME: name.split(" ").slice(1).join(" ") || name,
+        COMPANY: company || "",
+      };
+
+      // Brevo's SMS attribute MUST be in E.164 format (e.g., +1234567890)
+      if (sanitizedPhone && /^\+\d{10,15}$/.test(sanitizedPhone)) {
+        attributes.SMS = sanitizedPhone;
+      }
+
+      const contactResponse = await fetch("https://api.brevo.com/v3/contacts", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "api-key": brevoApiKey,
+        },
+        body: JSON.stringify({
+          email: email,
+          attributes: attributes,
+          listIds: [listId],
+          updateEnabled: true,
+        }),
+      });
+
+      if (!contactResponse.ok) {
+        const contactError = await contactResponse.json();
+        console.warn("Brevo Contact API Warning:", contactError);
+        
+        // If the error was specifically about the phone number, retry without it
+        if (contactError.code === "invalid_parameter" && contactError.message.toLowerCase().includes("phone")) {
+          console.log("Retrying Brevo contact creation without PHONE attribute...");
+          delete attributes.SMS;
+          await fetch("https://api.brevo.com/v3/contacts", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "api-key": brevoApiKey,
+            },
+            body: JSON.stringify({
+              email: email,
+              attributes: attributes,
+              listIds: [listId],
+              updateEnabled: true,
+            }),
+          });
+        }
+      }
+    } catch (err) {
+      console.error("Error creating Brevo contact:", err);
+    }
+
+    // 2. Send Transactional Email
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
@@ -45,7 +116,7 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         sender: {
           name: name || "Website Visitor",
-          email: recipientEmail, // Usually it's safer to use the recipient email as sender if it's the only verified domain in Brevo
+          email: senderEmail,
         },
         replyTo: {
           name: name || "Website Visitor",
@@ -53,7 +124,7 @@ export async function POST(request: Request) {
         },
         to: [
           {
-            email: recipientEmail,
+            email: contactEmail,
             name: "Alphorax Contact Team",
           },
         ],
@@ -65,14 +136,13 @@ export async function POST(request: Request) {
     const responseData = await response.json().catch(() => null);
 
     if (!response.ok) {
-      console.error("Brevo API Error:", response.status, responseData);
+      console.error("Brevo Email API Error:", response.status, responseData);
       return NextResponse.json(
         { error: "Failed to send email", details: responseData },
         { status: response.status }
       );
     }
 
-    console.log("Brevo API Success:", responseData);
     return NextResponse.json({ success: true, data: responseData });
   } catch (error) {
     console.error("Error sending contact form:", error);

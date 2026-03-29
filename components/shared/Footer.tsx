@@ -1,9 +1,40 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { SendIcon } from "lucide-react";
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setEmail("");
+      } else {
+        const data = await response.json();
+        alert(data.error || "Failed to subscribe. Please try again.");
+      }
+    } catch (err) {
+      console.error("Newsletter error:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <footer className="relative pt-20 pb-5 mb:pb-10 overflow-hidden">
       <div
@@ -226,33 +257,47 @@ const Footer = () => {
             <p className="text-secondary-silver mb-4">
               Get latest updates in your inbox.
             </p>
-            <form className="flex" aria-label="Newsletter subscription form">
-              <label htmlFor="email-subscription" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email-subscription"
-                type="email"
-                placeholder="Your email address"
-                className="px-4 py-2 bg-secondary-charcoal/50 border border-secondary-silver/20 rounded-l-md focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-transparent text-white flex-grow"
-                aria-required="true"
-              />
-              <button
-                type="submit"
-                className="flex-shrink-0 px-3 py-2 bg-primary hover:bg-primary/90 text-white rounded-r-md border border-accent/20 hover:border-accent transition-all relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-secondary-charcoal"
-                aria-label="Subscribe to newsletter"
-              >
-                <span
-                  className="absolute inset-0 w-0 bg-accent/10 group-hover:w-full transition-all duration-300"
-                  aria-hidden="true"
-                ></span>
-                <SendIcon
-                  size={18}
-                  className="relative z-10"
-                  aria-hidden="true"
+            {isSubmitted ? (
+              <div className="bg-accent/10 border border-accent/20 rounded-md p-3 text-sm text-accent animate-in fade-in duration-300">
+                Successfully subscribed!
+              </div>
+            ) : (
+              <form className="flex" aria-label="Newsletter subscription form" onSubmit={handleSubmit}>
+                <label htmlFor="email-subscription" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="email-subscription"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email address"
+                  className="px-4 py-2 bg-secondary-charcoal/50 border border-secondary-silver/20 rounded-l-md focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-transparent text-white flex-grow"
+                  aria-required="true"
+                  disabled={isSubmitting}
                 />
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-shrink-0 px-3 py-2 bg-primary hover:bg-primary/90 text-white rounded-r-md border border-accent/20 hover:border-accent transition-all relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-secondary-charcoal disabled:opacity-50"
+                  aria-label="Subscribe to newsletter"
+                >
+                  <span
+                    className="absolute inset-0 w-0 bg-accent/10 group-hover:w-full transition-all duration-300"
+                    aria-hidden="true"
+                  ></span>
+                  {isSubmitting ? (
+                    <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin z-10" />
+                  ) : (
+                    <SendIcon
+                      size={18}
+                      className="relative z-10"
+                      aria-hidden="true"
+                    />
+                  )}
+                </button>
+              </form>
+            )}
             {/* Certifications */}
             <div className="mt-6 hidden items-center flex-column">
               <p className="text-sm text-secondary-silver">Our Product:</p>

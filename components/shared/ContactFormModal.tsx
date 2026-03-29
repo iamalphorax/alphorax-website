@@ -63,14 +63,50 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsSubmitting(true)
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        setIsSubmitting(false)
-        setIsSuccess(true)
-        setTimeout(() => {
-            setIsSuccess(false)
-            onClose()
-        }, 3000)
+        
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    phone: formData.phone,
+                    company: formData.company,
+                    subject: formData.subject,
+                    message: formData.message,
+                    services: formData.selectedServices
+                }),
+            })
+
+            if (response.ok) {
+                setIsSubmitting(false)
+                setIsSuccess(true)
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    company: '',
+                    subject: '',
+                    selectedServices: [],
+                    message: ''
+                })
+                setTimeout(() => {
+                    setIsSuccess(false)
+                    onClose()
+                }, 3000)
+            } else {
+                const errorData = await response.json()
+                alert(errorData.error || 'Something went wrong. Please try again.')
+                setIsSubmitting(false)
+            }
+        } catch (error) {
+            console.error('Submission error:', error)
+            alert('Something went wrong. Please try again.')
+            setIsSubmitting(false)
+        }
     }
 
     return (
