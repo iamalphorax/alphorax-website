@@ -1,11 +1,17 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ChevronRightIcon, SparklesIcon } from "lucide-react";
+import Link from "next/link";
 import { HeroData } from "@/types/services";
+import ContactFormModal from "@/components/shared/ContactFormModal";
 
 const Hero = ({ data }: { data: HeroData }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const heroContent = data?.hero;
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const particlesRef = useRef<HTMLDivElement>(null);
   const graphicRef = useRef<HTMLDivElement>(null);
@@ -187,6 +193,7 @@ const Hero = ({ data }: { data: HeroData }) => {
             </p>
             <div className="flex flex-wrap gap-4">
               <button
+                onClick={handleOpenModal}
                 className="px-8 py-4 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-md border border-accent/20 hover:border-accent transition-all shadow-lg shadow-accent/10 flex items-center group focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-secondary-charcoal"
                 aria-label={heroContent?.cta?.primary?.text}
               >
@@ -197,13 +204,19 @@ const Hero = ({ data }: { data: HeroData }) => {
                   aria-hidden="true"
                 />
               </button>
-              <button
-                className="px-8 py-4 bg-transparent hover:bg-white/10 text-white rounded-md border border-white/30 hover:border-white/50 transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-secondary-charcoal"
+              <Link
+                href="/services"
+                className="px-8 py-4 bg-transparent hover:bg-white/10 text-white rounded-md border border-white/30 hover:border-white/50 transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-secondary-charcoal inline-flex items-center justify-center text-center"
                 aria-label={heroContent?.cta?.secondary?.text}
               >
                 {heroContent?.cta?.secondary?.text || "Learn More"}
-              </button>
+              </Link>
             </div>
+
+            <ContactFormModal 
+              isOpen={isModalOpen}
+              onClose={handleCloseModal}
+            />
             {/* Tech icons */}
             <div className="mt-16 flex hidden items-center space-x-8 opacity-70">
               <p className="text-sm text-secondary-silver">Our Product:</p>

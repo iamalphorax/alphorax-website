@@ -5,35 +5,41 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://alphorax.com";
     const baseUrl = rawBaseUrl.endsWith("/") ? rawBaseUrl.slice(0, -1) : rawBaseUrl;
 
+    // Helper to ensure we always have a valid Date object for Next.js to serialize
+    const safeDate = (dateVal: any): Date => {
+        const d = new Date(dateVal);
+        return isNaN(d.getTime()) ? new Date() : d;
+    };
+
     // Static routes
     const staticRoutes: MetadataRoute.Sitemap = [
         {
             url: `${baseUrl}`,
-            lastModified: new Date(),
+            lastModified: safeDate(new Date()),
             changeFrequency: "monthly",
             priority: 1,
         },
         {
             url: `${baseUrl}/about`,
-            lastModified: new Date(),
+            lastModified: safeDate(new Date()),
             changeFrequency: "monthly",
             priority: 0.8,
         },
         {
             url: `${baseUrl}/services`,
-            lastModified: new Date(),
+            lastModified: safeDate(new Date()),
             changeFrequency: "weekly",
             priority: 0.9,
         },
         {
             url: `${baseUrl}/contact`,
-            lastModified: new Date(),
+            lastModified: safeDate(new Date()),
             changeFrequency: "monthly",
             priority: 0.7,
         },
         {
             url: `${baseUrl}/blogs`,
-            lastModified: new Date(),
+            lastModified: safeDate(new Date()),
             changeFrequency: "weekly",
             priority: 0.6,
         },
@@ -42,18 +48,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch dynamic blogs from Cloudinary
     const blogs = await getAllBlogs();
 
-    const blogRoutes: MetadataRoute.Sitemap = blogs.reduce((acc, post) => {
-        const date = new Date(post.date);
-        if (!isNaN(date.getTime())) {
-            acc.push({
-                url: `${baseUrl}/blogs/${post.id}`,
-                lastModified: date,
-                changeFrequency: "monthly",
-                priority: post.featured ? 0.8 : 0.6,
-            });
-        }
-        return acc;
-    }, [] as MetadataRoute.Sitemap);
+    const blogRoutes: MetadataRoute.Sitemap = blogs.map((post) => ({
+        url: `${baseUrl}/blogs/${post.id}`,
+        lastModified: safeDate(post.date),
+        changeFrequency: "monthly",
+        priority: post.featured ? 0.8 : 0.6,
+    }));
 
     return [...staticRoutes, ...blogRoutes];
 }

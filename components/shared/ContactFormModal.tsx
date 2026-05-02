@@ -7,14 +7,14 @@ interface ContactFormModalProps {
     isOpen: boolean
     onClose: () => void
     selectedService?: string
-    services: { id: string; title: string }[]
+    services?: { id: string; title: string }[]
 }
 
 const ContactFormModal: React.FC<ContactFormModalProps> = ({
     isOpen,
     onClose,
     selectedService,
-    services
+    services = []
 }) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)

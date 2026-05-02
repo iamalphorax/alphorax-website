@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import {
   MailIcon,
   PhoneIcon,
@@ -11,18 +11,36 @@ import {
   VideoIcon,
   MessageCircleIcon,
   HeadphonesIcon,
-  LinkedinIcon,
-  TwitterIcon,
-  InstagramIcon,
-  FacebookIcon,
-  GithubIcon,
-  YoutubeIcon,
+  CalendarIcon,
+  XIcon,
+  LightbulbIcon,
+  FileTextIcon,
+  TargetIcon,
 } from "lucide-react";
 import {
   generateOrganizationSchema,
   generateContactPageSchema,
   getJsonLdProps,
 } from "@/lib/schema";
+
+const LinkedinIcon = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+);
+const TwitterIcon = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+);
+const InstagramIcon = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+);
+const GithubIcon = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 5 3 6.2 6 6.5a4.8 4.8 0 0 0-1 3.2v4"></path></svg>
+);
+const YoutubeIcon = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+);
+const FacebookIcon = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+);
 
 interface FormState {
   name: string;
@@ -46,6 +64,47 @@ const ContactPage = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isMeetingModalOpen, setIsMeetingModalOpen] = useState(false);
+
+  // Ref for the Calendly widget container inside the modal
+  const calendlyRef = useRef<HTMLDivElement>(null);
+
+  // Preload the Calendly script as soon as the contact page mounts
+  useEffect(() => {
+    const scriptId = "calendly-widget-script";
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "https://assets.calendly.com/assets/external/widget.js";
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  }, []);
+
+  // Initialise the inline widget each time the modal opens
+  useEffect(() => {
+    if (!isMeetingModalOpen || !calendlyRef.current) return;
+    // Small delay to ensure the modal div is painted before Calendly scans it
+    const timer = setTimeout(() => {
+      const win = window as unknown as {
+        Calendly?: {
+          initInlineWidget: (opts: {
+            url: string;
+            parentElement: HTMLElement;
+          }) => void;
+        };
+      };
+      if (win.Calendly && calendlyRef.current) {
+        // Clear any previous render before re-initialising
+        calendlyRef.current.innerHTML = "";
+        win.Calendly.initInlineWidget({
+          url: "https://calendly.com/alphorax-ltd/30min?hide_event_type_details=1&hide_gdpr_banner=1",
+          parentElement: calendlyRef.current,
+        });
+      }
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [isMeetingModalOpen]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -364,6 +423,66 @@ const ContactPage = () => {
 
               {/* Digital Presence Information - Replacing physical offices */}
               <div>
+                {/* Setup a Meeting - separate card */}
+                <div className="bg-secondary-charcoal/30 backdrop-blur-sm rounded-xl p-6 border border-secondary-silver/10 hover:border-accent/30 transition-all mb-10">
+                  {/* <h3 className="text-xl font-semibold mb-4 flex items-center">
+                    <CalendarIcon size={20} className="text-accent mr-2" />
+                    Setup a Meeting
+                  </h3> */}
+                  <h2 className="text-3xl font-bold mb-8 flex items-center">
+                    <CalendarIcon size={24} className="text-accent mr-2" />
+                    Setup a Meeting
+                  </h2>
+                  <p className="text-secondary-silver mb-6">
+                    Prefer a live conversation? Book a <span className="font-bold text-white">FREE </span>30 minutes discovery
+                    call with our team at a time that suits you.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                    {[
+                      {
+                        icon: <CalendarIcon size={18} className="text-accent" />,
+                        label: "30 Minutes Discovery Call",
+                      },
+                      {
+                        icon: <VideoIcon size={18} className="text-accent" />,
+                        label: "Video or Audio",
+                      },
+                      {
+                        icon: <HeadphonesIcon size={18} className="text-accent" />,
+                        label: "Expert Consultation",
+                      },
+                      {
+                        icon: <TargetIcon size={18} className="text-accent" />,
+                        label: "Tailored Solutions",
+                      },
+                      {
+                        icon: <LightbulbIcon size={18} className="text-accent" />,
+                        label: "Strategic Insights",
+                      },
+                      {
+                        icon: <FileTextIcon size={18} className="text-accent" />,
+                        label: "Clear Action Plan",
+                      },
+                      {
+                        icon: <CheckIcon size={18} className="text-accent" />,
+                        label: "No commitment required",
+                      },
+                    ].map((feat, i) => (
+                      <div key={i} className="flex items-center gap-2 text-sm text-secondary-silver">
+                        <span className="flex-shrink-0">{feat.icon}</span>
+                        {feat.label}
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    id="open-meeting-modal"
+                    onClick={() => setIsMeetingModalOpen(true)}
+                    className="w-full flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-lg border border-accent/20 hover:border-accent transition-all shadow-lg shadow-accent/10 font-medium"
+                  >
+                    <CalendarIcon size={18} />
+                    Book a Free 30 Minutes Call
+                  </button>
+                </div>
                 <h2 className="text-3xl font-bold mb-8 flex items-center">
                   <GlobeIcon size={24} className="text-accent mr-3" />
                   Our Digital Presence
@@ -396,16 +515,23 @@ const ContactPage = () => {
                       {
                         name: "LinkedIn",
                         icon: <LinkedinIcon size={24} className="text-white" />,
-                        username: "@alphorax",
+                        username: "@alphoraxltd",
                         color: "bg-[#0077B5]",
-                        url: "https://linkedin.com/company/alphorax",
+                        url: "https://www.linkedin.com/company/alphoraxltd",
+                      },
+                      {
+                        name: "Facebook",
+                        icon: <FacebookIcon size={24} className="text-white" />,
+                        username: "@alphoraxltd",
+                        color: "bg-[#1877F2]",
+                        url: "https://facebook.com/alphoraxltd",
                       },
                       {
                         name: "Twitter",
                         icon: <TwitterIcon size={24} className="text-white" />,
                         username: "@alphorax_ai",
                         color: "bg-[#1DA1F2]",
-                        url: "https://twitter.com/alphorax_ai",
+                        url: "#",
                       },
                       {
                         name: "Instagram",
@@ -415,54 +541,77 @@ const ContactPage = () => {
                         username: "@alphorax.ai",
                         color:
                           "bg-gradient-to-tr from-[#fa7e1e] via-[#d62976] to-[#4f5bd5]",
-                        url: "https://instagram.com/alphorax.ai",
+                        url: "#",
                       },
                       {
                         name: "GitHub",
                         icon: <GithubIcon size={24} className="text-white" />,
                         username: "@alphorax-tech",
                         color: "bg-[#333]",
-                        url: "https://github.com/alphorax-tech",
+                        url: "#",
                       },
                       {
                         name: "YouTube",
                         icon: <YoutubeIcon size={24} className="text-white" />,
                         username: "AlphoraxAI",
                         color: "bg-[#FF0000]",
-                        url: "https://youtube.com/c/AlphoraxAI",
+                        url: "#",
                       },
-                      {
-                        name: "Facebook",
-                        icon: <FacebookIcon size={24} className="text-white" />,
-                        username: "@alphorax.official",
-                        color: "bg-[#1877F2]",
-                        url: "https://facebook.com/alphorax.official",
-                      },
-                    ].map((platform, index) => (
-                      <a
-                        key={index}
-                        href={platform.url}
-                        className="flex items-center p-3 rounded-lg border border-secondary-silver/10 hover:border-accent/30 transition-all group"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <div
-                          className={`${platform.color} p-2 rounded-md mr-3 flex-shrink-0`}
+                    ].map((platform, index) => {
+                      const isClickable = platform.url !== "#";
+
+                      if (!isClickable) {
+                        return (
+                          <div
+                            key={index}
+                            className="flex items-center p-3 rounded-lg border border-secondary-silver/10 opacity-60 cursor-not-allowed"
+                          >
+                            <div
+                              className={`${platform.color} p-2 rounded-md mr-3 flex-shrink-0 grayscale`}
+                            >
+                              {platform.icon}
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-secondary-silver">
+                                {platform.name}
+                              </h4>
+                              <p className="text-secondary-silver/50 text-sm">
+                                Coming soon
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <a
+                          key={index}
+                          href={platform.url}
+                          className="flex items-center p-3 rounded-lg border border-secondary-silver/10 hover:border-accent/30 transition-all group"
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
-                          {platform.icon}
-                        </div>
-                        <div>
-                          <h4 className="font-medium group-hover:text-accent transition-colors">
-                            {platform.name}
-                          </h4>
-                          <p className="text-secondary-silver text-sm">
-                            {platform.username}
-                          </p>
-                        </div>
-                      </a>
-                    ))}
+                          <div
+                            className={`${platform.color} p-2 rounded-md mr-3 flex-shrink-0`}
+                          >
+                            {platform.icon}
+                          </div>
+                          <div>
+                            <h4 className="font-medium group-hover:text-accent transition-colors">
+                              {platform.name}
+                            </h4>
+                            <p className="text-secondary-silver text-sm">
+                              {platform.username}
+                            </p>
+                          </div>
+                        </a>
+                      );
+                    })}
                   </div>
+
                 </div>
+
+
               </div>
             </div>
           </div>
@@ -536,6 +685,55 @@ const ContactPage = () => {
           </div>
         </section>
       </main>
+
+      {/* Calendly Meeting Modal */}
+      {isMeetingModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Schedule a Meeting"
+        >
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={() => setIsMeetingModalOpen(false)}
+          />
+
+          {/* Modal Panel */}
+          <div className="relative z-10 w-full max-w-5xl max-h-[90vh] bg-secondary-charcoal rounded-2xl border border-accent/20 shadow-2xl shadow-accent/10 overflow-hidden flex flex-col">
+            {/* Modal Header */}
+            <div className="flex-shrink-0 flex items-center justify-between px-6 py-4 border-b border-secondary-silver/10 bg-secondary-charcoal/80">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-accent/10 rounded-lg">
+                  <CalendarIcon size={20} className="text-accent" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-white">Schedule a Meeting</h2>
+                  <p className="text-secondary-silver text-xs">Pick a time that works for you — 15 min discovery call</p>
+                </div>
+              </div>
+              <button
+                id="close-meeting-modal"
+                onClick={() => setIsMeetingModalOpen(false)}
+                className="p-2 rounded-lg hover:bg-secondary-silver/10 transition-colors text-secondary-silver hover:text-white"
+                aria-label="Close meeting scheduler"
+              >
+                <XIcon size={20} />
+              </button>
+            </div>
+
+            {/* Calendly inline widget */}
+            <div className="flex-1 overflow-auto">
+              <div
+                ref={calendlyRef}
+                className="calendly-inline-widget"
+                style={{ minWidth: "320px", height: "700px" }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
