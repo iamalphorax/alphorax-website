@@ -1,4 +1,4 @@
-import { getAllBlogs } from './lib/blogs.ts';
+import { getAllBlogs } from './lib/blogs';
 
 async function run() {
     try {
